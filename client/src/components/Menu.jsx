@@ -6,22 +6,21 @@ import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import LibraryMusicOutlinedIcon from "@mui/icons-material/LibraryMusicOutlined";
-import SportsBasketballOutlinedIcon from "@mui/icons-material/SportsBasketballOutlined";
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined";
+import SportsBasketballOutlinedIcon from "@mui/icons-material/SportsBasketballOutlined";
 import MovieOutlinedIcon from "@mui/icons-material/MovieOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { BrowserRouter, Switch, Route, Link, Routes } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Container = styled.div`
   flex: 1;
-  background-color: ${({ theme }) => theme.bgLighther};
-  // height: 100vh;
+  background-color: ${({ theme }) => theme.bgLighter};
   height: 100%;
   color: ${({ theme }) => theme.text};
   font-size: 14px;
@@ -59,7 +58,7 @@ const Item = styled.div`
 `;
 
 const Hr = styled.hr`
-  margin: 15px 0;
+  margin: 15px 0px;
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
@@ -87,6 +86,8 @@ const Title = styled.h2`
 `;
 
 const Menu = ({ darkMode, setDarkMode }) => {
+  const { currentUser } = useSelector((state) => state.user);
+
   return (
     <Container>
       <Wrapper>
@@ -100,14 +101,21 @@ const Menu = ({ darkMode, setDarkMode }) => {
           <HomeIcon />
           Home
         </Item>
-        <Item>
-          <ExploreOutlinedIcon />
-          Explore
-        </Item>
-        <Item>
-          <SubscriptionsOutlinedIcon />
-          Subscriptions
-        </Item>
+        <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
+          <Item>
+            <ExploreOutlinedIcon />
+            Explore
+          </Item>
+        </Link>
+        <Link
+          to="subscriptions"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <Item>
+            <SubscriptionsOutlinedIcon />
+            Subscriptions
+          </Item>
+        </Link>
         <Hr />
         <Item>
           <VideoLibraryOutlinedIcon />
@@ -118,18 +126,21 @@ const Menu = ({ darkMode, setDarkMode }) => {
           History
         </Item>
         <Hr />
-
-        <Login>
-          Sign in to like videos, comment, and subscribe.
-          <Link to="signin" style={{ textDecoration: "none" }}>
-            <Button>
-              <AccountCircleOutlinedIcon /> Sign In
-            </Button>
-          </Link>
-        </Login>
-        
-        <Hr />
-        <Title>Best of Movid</Title>
+        {!currentUser &&
+          <>
+            <Login>
+              Sign in to like videos, comment, and subscribe.
+              <Link to="signin" style={{ textDecoration: "none" }}>
+                <Button>
+                  <AccountCircleOutlinedIcon />
+                  SIGN IN
+                </Button>
+              </Link>
+            </Login>
+            <Hr />
+          </>
+        }
+        <Title>BEST OF MOVID</Title>
         <Item>
           <LibraryMusicOutlinedIcon />
           Music
